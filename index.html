@@ -3695,6 +3695,7 @@ body.mode-mvp .lr-type, body.mode-v2 .lr-type { display: none; }   /* one artifa
 }
 .proto-switcher.collapsed .proto-chev { transform: rotate(-90deg); }
 .proto-switcher.collapsed .proto-switcher-body { display: none; }
+.proto-switcher.hidden { display: none; }   /* hidden until H is pressed (Kaur, 13 Oct 2026) */
 .proto-switcher-body {
   display: flex;
   flex-direction: column;
@@ -4702,7 +4703,7 @@ body.mode-mvp .lr-type, body.mode-v2 .lr-type { display: none; }   /* one artifa
 
   <!-- ── Preview controller (prototype only, not part of the product) ───── -->
   <!-- titled "Settings" and closed by default (Kaur, 13 Oct 2026) -->
-  <div class="proto-switcher collapsed" id="proto-switcher">
+  <div class="proto-switcher hidden" id="proto-switcher">
     <button class="proto-switcher-label" onclick="insTogglePreviewPanel()" title="Collapse or expand">
       <span>Settings</span>
       <i class="mdi mdi-menu-down proto-chev"></i>
@@ -9216,14 +9217,14 @@ function ndTipHide() { const el = document.getElementById('nd-tip'); if (el) el.
 // type filter, notes documents, the notes-as-context prompt and the cross-links
 // from station findings).
 const INS_MODES = ['mvp', 'v2', 'v3'];
-let INS_MODE = 'mvp';
-try { INS_MODE = localStorage.getItem('insMode') || 'mvp'; } catch (e) { /* private window */ }
-if (!INS_MODES.includes(INS_MODE)) INS_MODE = 'mvp';
+let INS_MODE = 'v3';   // V3 by default (Kaur, 13 Oct 2026)
+try { INS_MODE = localStorage.getItem('insModeV3default') || 'v3'; } catch (e) { /* private window */ }
+if (!INS_MODES.includes(INS_MODE)) INS_MODE = 'v3';
 
 function insSetMode(m) {
   if (!INS_MODES.includes(m)) m = 'mvp';
   INS_MODE = m;
-  try { localStorage.setItem('insMode', m); } catch (e) { /* private window */ }
+  try { localStorage.setItem('insModeV3default', m); } catch (e) { /* private window */ }
   INS_MODES.forEach(x => document.body.classList.toggle('mode-' + x, m === x));
   // the feature set is switched from the preview panel only (no product UI for it)
   const verSel = document.getElementById('proto-version');
@@ -9612,6 +9613,15 @@ function insSetRowStates(v) {
 function insTogglePreviewPanel() {
   document.getElementById('proto-switcher').classList.toggle('collapsed');
 }
+
+// H shows or hides the whole Settings panel, unless the user is typing
+document.addEventListener('keydown', e => {
+  if (e.key !== 'h' && e.key !== 'H') return;
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  const t = e.target;
+  if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+  document.getElementById('proto-switcher').classList.toggle('hidden');
+});
 
 function insInitPreview() {
   let v = 'normal';
