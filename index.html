@@ -7597,8 +7597,8 @@ osa vahest seletab masina seadistamise viis. Neljapäeval ja reedel langeb käid
   },
 
   // ── Extra notes analysis · Mechanical failure on Line 3 (V3, 12 Oct 2026) ──
-  // Layout per Figma 42703:9324: Summary + Findings + Other findings + Possible
-  // wrong stop reasons (truncated until expanded), then the Themes bar and one
+  // Layout per Figma 42703:9324: Summary + Findings (top 4 themes) + Other
+  // findings (truncated until expanded), then the Themes bar and one
   // expandable card per theme (42718:24521). Rendered by _ndRenderNotesDoc.
   notes_panne: {
     type: 'notes',
@@ -7609,12 +7609,11 @@ osa vahest seletab masina seadistamise viis. Neljapäeval ja reedel langeb käid
     summary: `The 112 notes logged against <b>Mechanical failure</b> group into 6 themes. Format-part wear on the blister station is the largest by far, followed by sensor faults on the blister feed. Both concentrate on the 3rd shift and on Product A. Notes quality is good: only 9% are too short to classify.`,
     findings: [
       { theme: 'Format-part wear', text: 'accounts for 10h 12min (32.4%) of Mechanical failure downtime across 38 notes. Operators describe worn forming and sealing format parts that stop the line or damage blisters until the part is swapped. The notes start in late April and are almost all logged during Product A runs.<br>Predominantly during the 3rd shift (63%).' },
+      { theme: 'Sensor faults — blister feed', text: 'accounts for 6h 28min (20.5%) of Mechanical failure downtime across 24 notes. Operators describe the feed sensor reporting empty pockets while product is present, and the line stays down until the sensor is cleaned or re-taught. Most of these notes come from Operator C, and several follow a format change or a cleaning.<br>Predominantly during the 3rd shift (54%).' },
+      { theme: 'Foil feed jams', text: 'accounts for 3h 21min (10.6%) of Mechanical failure downtime across 17 notes. Operators describe the foil jamming, tearing at the splice or running off track at the sealing station, most often right after a foil roll change. More than half of the notes are logged during Product B runs.<br>Predominantly during the 2nd shift (47%).' },
+      { theme: 'Sealing temperature drift', text: 'accounts for 2h 34min (8.1%) of Mechanical failure downtime across 12 notes. Operators describe waiting for the sealing station to heat up again after a break or a longer stop, or raising the temperature when seals do not hold. All of these notes are logged at the sealing station, two thirds of them during Product A runs.<br>Predominantly during the 1st shift (58%).' },
     ],
-    other: `<b>Sensor faults — blister feed</b> covers misreads of the feed sensor and the re-teaching that follows; most of it is logged by one operator team. <b>Foil feed jams</b> cluster around foil roll changes. <b>Sealing temperature drift</b> points to reheating after the sealing station loses temperature, usually after a longer stop. <b>Waiting for mechanic</b> is time where the fault was already known and the loss is the response time.`,
-    wrong: [
-      { theme: 'Waiting for mechanic', text: 'Notes describe waiting for a person, not a mechanical fault. This time may belong to a waiting or organisational stop reason rather than Mechanical failure.' },
-      { theme: 'Sealing temperature drift', text: 'Notes describe heating up after a stop, which may belong to a start-up or process stop reason rather than Mechanical failure.' },
-    ],
+    other: `<b>Waiting for mechanic</b> accounts for 2h 22min (7.5%) across 11 notes. The fault was already known and the loss is the response time: most of these notes are from the 3rd shift, when no mechanic is on site. The remaining 10 notes are too short to classify, such as "stop" or "fault".`,
     themes: [
       { name: 'Format-part wear', notes: 38, min: 612,
         ops: [[47.4, 'Operator C, Operator F'], [28.9, 'Operator A, Operator D'], [13.2, 'Operator B']],
@@ -7671,11 +7670,11 @@ osa vahest seletab masina seadistamise viis. Neljapäeval ja reedel langeb käid
     summary: `The 486 notes logged against <b>Waiting for upstream line</b> group into 4 themes and a small remainder. Changeovers on the upstream Line 5 explain most of the waiting time; material staging at Line 5 is a distant second. Notes quality is good: only 7% are too short to classify.`,
     findings: [
       { theme: 'Line 5 changeover', text: 'accounts for 35h 40min (46.4%) of Waiting for upstream line downtime across 214 notes. Operators on Line 4 wait while Line 5 changes format, and the wait is longest when the Line 5 changeover starts at the shift change.<br>Predominantly during the 1st shift (58%).' },
+      { theme: 'Material staging at Line 5', text: 'accounts for 12h 40min (16.5%) of Waiting for upstream line downtime across 96 notes. Line 5 is running but has no preforms, caps or labels ready, so nothing reaches Line 4. Operators often mention late forklift deliveries from the warehouse, and the waits are most common during 1.0 l bottle runs.<br>Predominantly during the 2nd shift (49%).' },
+      { theme: 'Line 5 breakdowns', text: 'accounts for 10h 10min (13.2%) of Waiting for upstream line downtime across 71 notes. Operators describe technical stops upstream, mostly at the Line 5 filler and blow moulder, and several notes say Line 4 was not told why Line 5 stopped. The waits are spread across all products.<br>Most often during the 3rd shift (42%).' },
+      { theme: 'Buffer conveyor full or empty', text: 'accounts for 6h 20min (8.2%) of Waiting for upstream line downtime across 52 notes. Operators describe the buffer between the lines running empty during short upstream stops, which suggests the buffer is too small to bridge them. Part of these notes describe the conveyor on Line 4 itself jamming, which is not an upstream wait.<br>Spread across all shifts, slightly more on the 1st shift (39%).' },
     ],
-    other: `<b>Material staging at Line 5</b> covers waits where Line 5 runs but has no material ready to send on. <b>Line 5 breakdowns</b> are waits caused by technical stops upstream; they are fewer but longer. <b>Buffer conveyor full or empty</b> points to the buffer between the lines being too small to bridge short upstream stops.`,
-    wrong: [
-      { theme: 'Buffer conveyor full or empty', text: 'Part of these notes describe the conveyor on Line 4 itself jamming, which may belong to a technical stop reason on Line 4 rather than Waiting for upstream line.' },
-    ],
+    other: `The remaining 53 notes, 5h (6.5%), are too short to classify, such as "waiting", "upstream" or "L5". They do not change the picture above.`,
     themes: [
       { name: 'Line 5 changeover', notes: 214, min: 2140,
         ops: [[38.3, 'Team Blue'], [33.6, 'Team Red'], [28.1, 'Team Green']],
@@ -8951,13 +8950,14 @@ const ND_TEMPLATES = {
   'Machine set up': {
     totalShare: 0.886,
     summary: s => `The notes logged against <b>${s}</b> group into 8 themes. Loading new material and shift start / end activities take the largest share, together close to a third of the stop's downtime. Several smaller themes are tied to one or two operators on the day shift.`,
-    findings: [{ theme: 'Loading new material / getting new load', text: 'is the largest theme. It covers the time operators spend retrieving or loading new material to continue production, and it is by far the largest contributor to Machine set up downtime, with a high volume of notes logged against it.<br>Predominantly during the night shift (71%).' }],
-    other: `Several smaller themes are concentrated on the day shift and linked closely to one or two operators. <b>Shift start / end / wrap-up activities</b> captures time at shift boundaries, while <b>Pin issues (not working, not going down, cleaning pin tips)</b> points to recurring equipment-related delays during setup. <b>Team leader involvement / assistance / training</b> suggests that operators sometimes need support to complete the setup process. <b>Personal breaks / toilet</b> and <b>Meetings / briefings</b> account for small amounts of time logged under this stop reason.`,
-    wrong: [
-      { theme: 'Pin issues (not working, not going down, cleaning pin tips)', text: 'Notes describe mechanical pin faults, which may belong to a maintenance or equipment fault stop reason rather than the current category.' },
-      { theme: 'Personal breaks / toilet', text: 'Notes describe personal breaks and toilet visits which may belong to a planned break or personal time stop reason rather than the current category.' },
-      { theme: 'Meetings / briefings', text: 'Notes describe planned meetings/briefings which may belong to a planned downtime or organisational stop reason rather than the current category.' },
+    // top 4 themes; the numbers and the shift line are filled in by _ndMakeDoc
+    findings: [
+      { theme: 'Loading new material / getting new load', desc: 'Operators describe retrieving or loading new material to continue production, often waiting for the next load to be brought to the line before the setup can finish.' },
+      { theme: 'Shift start / end / wrap-up activities', desc: 'Notes describe handovers, start-up checks and tidying up at the shift boundaries. The line is not running, so this time is logged as set up even when no setup is under way.' },
+      { theme: 'Pin issues (not working, not going down, cleaning pin tips)', desc: 'Operators describe pins that do not work, do not go down or need their tips cleaned before the setup can continue. The same faults return across the period, which points to a recurring equipment problem rather than setup work.' },
+      { theme: 'Team leader involvement / assistance / training', desc: 'Notes describe operators waiting for or getting help from a team leader to complete the setup, often while a newer operator is being trained. Most of these notes come from one or two operators.' },
     ],
+    other: `<b>Personal breaks / toilet</b> and <b>Meetings / briefings</b> account for smaller amounts of time logged under this stop reason, and both describe time away from the setup itself. <b>Cleaning before setup</b> covers cleaning the line before a new setup starts.`,
     themes: [
       ['Loading new material / getting new load', 159, 349], ['Shift start / end / wrap-up activities', 123, 348],
       ['Pin issues (not working, not going down, cleaning pin tips)', 30, 322], ['Team leader involvement / assistance / training', 70, 321],
@@ -8967,9 +8967,8 @@ const ND_TEMPLATES = {
   generic: {
     totalShare: 0.9,
     summary: s => `The notes logged against <b>${s}</b> group into 4 themes and a small remainder. A recurring equipment fault is the largest theme, and waiting for help adds a large share on top of it.`,
-    findings: [{ theme: 'Recurring equipment fault', text: 'is the largest theme. Operators describe the same fault returning within the shift and being cleared without a lasting fix.<br>Predominantly during the 2nd shift (54%).' }],
+    findings: [{ theme: 'Recurring equipment fault', desc: 'Operators describe the same fault returning within the shift and being cleared without a lasting fix.' }],
     other: `<b>Waiting for maintenance or help</b> is time where the cause was known and the loss is the response time. <b>Material or tooling not ready</b> points to preparation that happens after the stop starts. <b>Operator handling and training</b> is concentrated on newer operators.`,
-    wrong: [{ theme: 'Waiting for maintenance or help', text: 'Notes describe waiting for a person, which may belong to a waiting or organisational stop reason rather than the current category.' }],
     themes: [['Recurring equipment fault', 34, 410], ['Waiting for maintenance or help', 22, 260], ['Material or tooling not ready', 18, 190], ['Operator handling and training', 14, 120], ['Other', 12, 80]],
   },
 };
@@ -9004,7 +9003,7 @@ function _ndFitUniq(list, notes) {
 function _ndMakeDoc(item) {
   // always the same analysis (Kaur, 12 Oct 2026): the Figma 42703:9324 example
   const base = ND_TEMPLATES['Machine set up'];
-  const t = { ...base, findings: base.findings.map(f => ({ ...f, text: f.text.replace(/Machine set up/g, item.stop) })) };
+  const t = base;
   const rawNotes = t.themes.reduce((s, x) => s + x[1], 0);
   const scale = item.notesCount / rawNotes;
   const themes = t.themes.map(([name, n, min], j) => {
@@ -9019,12 +9018,20 @@ function _ndMakeDoc(item) {
     };
   });
   const noted = themes.reduce((s, x) => s + x.min, 0);
+  const totalMin = Math.round(noted / t.totalShare);
+  // findings in the style of the static mocks: duration, share, notes, description, top shift
+  const findings = t.findings.map(f => {
+    const th = themes.find(x => x.name === f.theme);
+    const [share, shift] = th.shifts[0];
+    const when = share >= 50 ? 'Predominantly during' : 'Most often during';
+    return { theme: f.theme, text: `accounts for ${_ndDur(th.min)} (${(th.min / totalMin * 100).toFixed(1)}%) of ${item.stop} downtime across ${th.notes} notes. ${f.desc}<br>${when} the ${shift.toLowerCase()} (${Math.round(share)}%).` };
+  });
   return {
     type: 'notes', station: item.station, stop: item.stop, notesCount: item.notesCount,
     period: item.period, days: item.days, created: item.created, requestedBy: item.requestedBy, lang: 'English',
-    totalMin: Math.round(noted / t.totalShare),
+    totalMin,
     context: item.context || null,
-    summary: t.summary(item.stop), findings: t.findings, other: t.other, wrong: t.wrong, themes,
+    summary: t.summary(item.stop), findings, other: t.other, themes,
   };
 }
 // the expanded theme's notes list from Figma 42718:24521
@@ -9133,10 +9140,6 @@ function _ndRenderNotesDoc(d, docKey, itemIdx, main) {
         ${d.other ? `<div class="nd-sec">
           <h2 class="nd-h">Other findings</h2>
           <p class="nd-p">${d.other}</p>
-        </div>` : ''}
-        ${d.wrong && d.wrong.length ? `<div class="nd-sec">
-          <h2 class="nd-h">Possible wrong stop reasons</h2>
-          <ul class="nd-ul">${d.wrong.map(w => `<li><b>${w.theme}</b> - ${w.text}</li>`).join('')}</ul>
         </div>` : ''}
         <div class="nd-fade">
           <button class="nd-chev" title="${_ndUi.expanded ? 'Show less' : 'Show more'}" onclick="ndToggleBody()">
