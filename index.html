@@ -7939,7 +7939,9 @@ const INS_USER_LANG = 'et';   // the viewer's Evocon UI language
 const INS_DOC_STRINGS = {
   et: { 'Summary': 'Kokkuvõte', 'Findings': 'Leiud' },
 };
-let INS_DOC_LANG = INS_USER_LANG;   // set to the UI language on every open; not stored
+// analyses open in English for the test build; Estonian stays in the flag menu (Kaur, 13 Oct 2026)
+const INS_DEFAULT_DOC_LANG = 'en';
+let INS_DOC_LANG = INS_DEFAULT_DOC_LANG;   // reset on every open; not stored
 let _insRenderLang = 'en';          // language of the document on screen
 
 // Preview "Translations": created = the viewer's language made at creation;
@@ -7976,10 +7978,10 @@ function _insDocT(s) {
 // language (_insRowSummaryPh says so, for the grey placeholder style)
 const INS_SUMMARY_PH = 'The summary is not available in your language yet. Open the analysis to translate it.';
 function _insRowSummaryPh(i) {
-  return INS_MODE !== 'mvp' && !!i.summaryEt && !_insHasUserLang(i, i.doc);
+  return INS_DEFAULT_DOC_LANG !== 'en' && INS_MODE !== 'mvp' && !!i.summaryEt && !_insHasUserLang(i, i.doc);
 }
 function _insRowSummary(i) {
-  if (INS_MODE === 'mvp' || !i.summaryEt) return i.summary;
+  if (INS_DEFAULT_DOC_LANG === 'en' || INS_MODE === 'mvp' || !i.summaryEt) return i.summary;
   return _insHasUserLang(i, i.doc) ? i.summaryEt : INS_SUMMARY_PH;
 }
 function _insFlag(l) {
@@ -10262,9 +10264,9 @@ function insOpenDoc(idx, fromHistory = false) {
       _insDocCtx.station = d.station;
       _insDocCtx.range = d.period;
     }
-    // every open starts in the viewer's UI language (the choice is not stored);
+    // every open starts in the default language (the choice is not stored);
     // a translation that finished after the reader left is simply there now
-    INS_DOC_LANG = INS_USER_LANG;
+    INS_DOC_LANG = INS_DEFAULT_DOC_LANG;
     if (_insTr[item.doc] === 'ready') _insTr[item.doc] = 'done';
 
     document.getElementById('lib-view').style.display = 'none';
